@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图片懒加载</title>
+    <style>
+        img {
+            display: block;
+            width: 100%;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <img data-src="./images/1.jpg" alt="">
+    <img data-src="./images/2.jpg" alt="">
+    <img data-src="./images/3.jpg" alt="">
+    <img data-src="./images/4.jpg" alt="">
+    <img data-src="./images/5.jpg" alt="">
+    <img data-src="./images/6.jpg" alt="">
+    <img data-src="./images/7.jpg" alt="">
+    <img data-src="./images/8.jpg" alt="">
+    <img data-src="./images/9.jpg" alt="">
+    <img data-src="./images/10.jpg" alt="">
+    <img data-src="./images/1.jpg" alt="">
+    <img data-src="./images/2.jpg" alt="">
+</body>
+<script>
+  // 先获取所有图片
+  const imgs = Array.from(document.getElementsByTagName('img'));
+
+  // 判断每一个图片是否到了可视区
+  const lazyload = function () {
+    for (let i = 0; i < imgs.length; i++) {
+      const H = document.documentElement.clientHeight; // 可视区高度
+      const T = document.documentElement.scrollTop || document.body.scrollTop; // 获取到已滚动的距离
+      if (H + T > imgTop(imgs[i])) { // 如果图片距离文档顶部的距离小于(H+T)
+        imgs[i].setAttribute('src', imgs[i].getAttribute('data-src'));
+      }
+    }
+  };
+
+  // 用于获取图片(元素)到顶部的距离
+  function imgTop (element) {
+    let Top = element.offsetTop;
+    while (element = element.offsetParent) {
+      Top += element.offsetTop;
+    }
+    return Top;
+  }
+
+  // 执行lazyload
+  window.onload = window.onscroll = function () {
+    lazyload()
+  }
+</script>
+</html>
