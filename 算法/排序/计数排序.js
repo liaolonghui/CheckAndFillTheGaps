@@ -21,8 +21,8 @@ function counting_sort (arr) {
 	// 结果取出
 	for (var i = 0; i < arr.length; i++) {
 		const p = C[arr[i]] - 1 // 回写位置
-		C[arr[i]]--  // 新回写位置
 		R[p] = arr[i]  // 回写结果
+		C[arr[i]]--  // 新回写位置
 	}
 	
 	return R
