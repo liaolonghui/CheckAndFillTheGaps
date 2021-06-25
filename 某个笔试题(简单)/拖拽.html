@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .father {
+      position: relative;
+      width: 700px;
+      height: 500px;
+      margin: 0 auto;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+    }
+    .son {
+      position: absolute;
+      top: 50px;
+      left: 100px;
+      width: 100px;
+      height: 100px;
+      cursor: pointer;
+      background-color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="father">
+    <div class="son"></div>
+  </div>
+</body>
+<script>
+  const father = document.querySelector('.father')
+  const son = document.querySelector('.son')
+  const maxTop = father.offsetHeight - son.offsetHeight
+  const maxLeft = father.offsetWidth - son.offsetWidth
+
+  son.onmousedown = function(e){
+    const eLeft = e.offsetX
+    const eTop = e.offsetY
+
+    document.onmousemove = function(e) {
+      let nowL = e.clientX - eLeft - father.offsetLeft
+      let nowT = e.clientY - eTop - father.offsetTop
+
+      if (nowT<0) {
+        nowT = 0
+      } else if (nowT>maxTop) {
+        nowT = maxTop
+      }
+      if (nowL<0) {
+        nowL = 0
+      } else if (nowL>maxLeft) {
+        nowL = maxLeft
+      }
+
+      son.style.top = nowT+'px'
+      son.style.left = nowL+'px'
+    }
+
+  }
+  son.onmouseup = function() {
+    document.onmousemove = null
+  }
+  
+</script>
+</html>
